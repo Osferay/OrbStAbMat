@@ -1,19 +1,16 @@
-#
-# OrbStAbMat: Orbit stabilizer for abelian matrix groups
-#
-#! @Chapter Introduction
-#!
-#! OrbStAbMat is a package which does some
-#! interesting and cool things
-#!
-#! @Chapter Functionality
-#!
-#!
-#! @Section Example Methods
-#!
-#! This section will describe the example
-#! methods of OrbStAbMat
+# basis.gi
+DeclareGlobalFunction( "BasisFiniteAbelianMatGroup" );
 
-#! @Description
-#!   Insert documentation for your function here
-DeclareGlobalFunction( "OrbStAbMat_Example" );
+# algebra.gi
+DeclareGlobalFunction( "BasisMatrixAlgebra" );
+
+# series.gi
+DeclareGlobalFunction( "RadicalModuleAbelianMatGroup" );
+DeclareGlobalFunction( "RadicalSeriesAbelianMatGroup" );
+DeclareGlobalFunction( "HomogeneousSemisimpleSeriesAbelianMatGroup" );
+DeclareGlobalFunction( "IrreducibleSeriesAbelianMatGroup" );
+DeclareGlobalFunction( "IntegralIrreducibleBlock" );
+
+#Orbstab.gi
+DeclareGlobalFunction( "StabilizerAbelianMatGroup" );
+DeclareGlobalFunction( "OrbitAbelianMatGroup" );

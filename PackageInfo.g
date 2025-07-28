@@ -16,8 +16,8 @@ License := "GPL-2.0-or-later",
 
 Persons := [
   rec(
-    FirstNames := "Oscar",
-    LastName := "Fernandez Ayala",
+    FirstNames := "Óscar",
+    LastName := "Fernández Ayala",
     WWWHome := "https://osferay.github.io/",
     Email := "oscar00ayala@gmail.com",
     IsAuthor := true,
