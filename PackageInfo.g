@@ -33,7 +33,7 @@ SourceRepository := rec(
     URL := "https://github.com/Osferay/OrbStAbMat",
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := "https://Osferay.github.io/OrbStAbMat/",
+PackageWWWHome  := "https://osferay.github.io/research/software/orbstabmat",
 PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 README_URL      := Concatenation( ~.PackageWWWHome, "README.md" ),
 ArchiveURL      := Concatenation( ~.SourceRepository.URL,
