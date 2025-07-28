@@ -30,10 +30,10 @@ Persons := [
 
 SourceRepository := rec(
     Type := "git",
-    URL := "https://github.com/sferayO/OrbStAbMat",
+    URL := "https://github.com/Osferay/OrbStAbMat",
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := "https://sferayO.github.io/OrbStAbMat/",
+PackageWWWHome  := "https://Osferay.github.io/OrbStAbMat/",
 PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 README_URL      := Concatenation( ~.PackageWWWHome, "README.md" ),
 ArchiveURL      := Concatenation( ~.SourceRepository.URL,
