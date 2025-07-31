@@ -162,6 +162,10 @@ InstallGlobalFunction( StabilizerAbelianMatGroup,
         Error( "The group G has to be an abelian matrix group.");
     fi;
 
+    if ForAll( mats, x -> Order(x) <> infinity ) then
+        return StabilizerFiniteAbelianMatGroup( mats, v );
+    fi;
+
     ser    := IntegralIrreducibleBlock( mats );
     stab   := mats;
     I      := ser[1];
@@ -366,6 +370,10 @@ InstallGlobalFunction( OrbitAbelianMatGroup,
 
     if not IsAbelianMatrixAction( mats ) then
         Error( "The group G has to be an abelian matrix group.");
+    fi;
+
+    if ForAll( mats, x -> Order(x) <> infinity ) then
+        return OrbitFiniteAbelianMatGroup( mats, v, w );
     fi;
 
     ser    := IntegralIrreducibleBlock( mats );
