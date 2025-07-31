@@ -5,8 +5,8 @@
 # metadata in PackageInfo.g.
 #
 LoadPackage( "OrbStAbMat" );
+dir := DirectoriesPackageLibrary( "OrbStAbMat", "tst" );
+tst := [ "fos.tst", "orbstab.tst" ];
 
-TestDirectory(DirectoriesPackageLibrary( "OrbStAbMat", "tst" ),
-  rec(exitGAP := true));
-
-FORCE_QUIT_GAP(1); # if we ever get here, there was an error
+tst := List( tst, x -> Filename( dir, x ) );
+TestDirectory( tst, rec(exitGAP := true));
