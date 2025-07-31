@@ -277,3 +277,67 @@ InstallGlobalFunction( BasisFiniteAbelianMatGroup,
     return pcomp;
 
 end );
+
+RelationLatticeFiniteAbelianMat := function( gens )
+
+    local   ord,
+            fac,
+            P,
+            i,
+            p,
+            exps,
+            j,
+            n,
+            e,
+            pos,
+            pcomp,
+            L,
+            x,
+            R,
+            H;
+
+    ord := List( gens, Order );
+    
+    fac := List( ord, Factors );
+    P   := AsSet( Flat(fac) );
+    P   := ShallowCopy( P );
+    fac := List( fac, Collected );
+
+    for i in [ 1..Length( P ) ] do
+        p    := P[i];
+        exps := [];
+        for j in [ 1..Length( fac ) ] do
+            n   := List( fac[j], x -> x[1] );
+            e   := List( fac[j], x -> x[2] );
+
+            pos := Position( n , p );
+            if IsBool(pos) then
+                Add( exps, 0 );
+            else
+                Add( exps, e[pos] );
+            fi;
+
+            P[i] := [ p, exps ];
+        od;
+
+    od;
+
+    pcomp := [];
+    L     := [];
+    for p in P do
+        x := List( [1..Length( gens )], i -> gens[i]^( ord[i]/ p[1]^p[2][i] ) );
+
+        H := [ gens[1]^0 ];
+        for i in [1..Length( x )] do
+            R := RelationMatrixAbelianpGroup( H, x[i] );
+            Add( L, [ p[1], p[2][i], i, R ] );
+            H := BasisRelationAbelianMatpGroup( H, R, x[i] );
+        od;
+
+        Add( pcomp, [ p[1], H ] );
+    
+    od;
+
+    return rec( pcomp := pcomp, rellat := L );
+
+end ;

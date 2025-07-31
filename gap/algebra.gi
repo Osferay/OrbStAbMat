@@ -179,7 +179,7 @@ RelationLatticeAbelianMat := function( mact )
     SetPrimitiveElement( F, p.b );
     SetDefiningPolynomial( F, p.minpol );
     
-    return RelationLatticeOfTFUnits( F, mact );
+    return RelationLattice( F, mact );
 
 end;
 
@@ -202,14 +202,10 @@ MembershipRelationLatticeAbelianMat := function( mact, M )
     SetPrimitiveElement( F, p.b );
     SetDefiningPolynomial( F, p.minpol );
 
-    if not IsUnitOfNumberField( F, M ) then
-        return false;
-    fi;
-
     act  := ShallowCopy( mact );
     act  := Concatenation( [M] , act );
 
-    rel  := RelationLatticeOfUnits( F, act )[1];
+    rel  := RelationLattice( F, act )[1];
 
     if PositionNonZero( rel ) > 1 or AbsInt( rel[1] ) <> 1 then
         return false;

@@ -146,7 +146,7 @@ end );
 IrreducibleSplitting := function( mats )
     local mact, f, p, K, split, i, V, tmp;
 
-    mact := ShallowCopy( mats );
+    mact := StructuralCopy( mats );
     p := PrimitiveElementMatrixAlgebra( mact );
     f := Factors(p.minpol);
     
@@ -157,11 +157,12 @@ IrreducibleSplitting := function( mats )
         K := NullspaceMat( K );
         tmp := [];
         i := 1;
+        
         repeat
             #Find a vector that is not in span of sub
             if not IsInSpan( K[i], tmp ) then
                 V := K[i];
-                V := InSpan( List( mact, x -> V*x ) , [ V ] );
+                V := SpinnUpEchelonBase( [V], List( mact, x -> V*x ) , mact, OnRight );
                 Add( split, V );
                 tmp := Concatenation( tmp, V );
             fi;
@@ -192,7 +193,7 @@ InstallGlobalFunction( IrreducibleSeriesAbelianMatGroup,
         Add( ser, rad[i] );
         act  := InducedActionFactor( mats, U, rad[i], rad[i+1] );
         split := IrreducibleSplitting( act.act );
-
+        
         for j in [2..Length(split)] do
             tmp := SumOfSplitting( split, j );
             tmp := List( tmp, x -> PreimagesRepresentativeByNHSEB( x, act.hom ) );

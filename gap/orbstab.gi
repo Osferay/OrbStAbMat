@@ -37,8 +37,7 @@ GammaFOS := function( mats, rels, der, derC )
             aff,
             fos;
 
-    base  := ShallowCopy( derC );
-    base  := VectorspaceBasis( base );
+    base  := StructuralCopy( derC );
     # Construct the affine action of mats and der
     aff   := AssociatedAffineAction( mats, der );
     #Constuct gamma as a operation that returns a vector modulo derC
@@ -90,7 +89,7 @@ CheckGammaFOS := function( mats, fos, delta, derC, U, V )
     #Check if the obtained elms are in derC
 
     if DEBUG@ then
-        base := ShallowCopy( derC );
+        base := StructuralCopy( derC );
         base := VectorspaceBasis( base );
         tmp := List( der, x -> MemberBySemiEchelonBase( x, base ) );
         if ForAny( tmp, x -> IsBool( x ) ) then
@@ -112,7 +111,7 @@ ExtendGammaFOS := function( fos, C, derC )
             i;
         
     ext := [];
-
+    
     for i in [1..Length( fos.der ) ] do
         tmp := -1*SolutionIntMat( derC, fos.der[i] );
         Add( ext, fos.ker[i] * ( MappedVector( tmp, C ) ) );
@@ -190,6 +189,7 @@ InstallGlobalFunction( StabilizerAbelianMatGroup,
             if ForAll( derC, x -> x = x*0 ) then
                 stab := C;
             else
+            
                 fos  := GammaFOS( imat, List( stab, Order ), ider, derC );
                 fos  := CheckGammaFOS( stab, fos, delta, derC, ser[i], ser[i+1] );
                 stab := ExtendGammaFOS( fos, C, derC );
@@ -284,7 +284,7 @@ MembershipDelta := function( mats, imat, u, delta )
     # Test membership in G
     exp := MembershipRelationLatticeAbelianMat( imat, g );
 
-    if IsBool(g) then 
+    if IsBool( exp ) then 
         return rec( membership := false ); 
     else 
         g := MappedVector( exp, mats );
@@ -321,7 +321,7 @@ MembershipGammaFOS := function( u, mats, rels, der, derC )
     I   := IdentityMat( Length( mats[1] ) );
     fos := GammaFOS( mats, rels, der, derC );
     vec := ShallowCopy(u);
-    Add( u, 1 );
+    Add( vec, 1 );
     
     pos := Position( fos.orbit, vec );
 
@@ -406,6 +406,7 @@ InstallGlobalFunction( OrbitAbelianMatGroup,
                 mem  := MembershipDeltaC( w-u, ser[i], ser[i+1], derC );
                 
                 if mem.membership = false then 
+                    Error();
                     fos  := MembershipGammaFOS( mem.vec, imat, List( stab, Order ), ider, derC );
 
                     if fos.membership = false then
