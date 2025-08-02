@@ -126,7 +126,7 @@ InstallGlobalFunction( HomogeneousSemisimpleSeriesAbelianMatGroup,
 
         for j in [2..Length(split)] do
             tmp := SumOfSplitting( split, j );
-            tmp := List( tmp, x -> PreimagesRepresentativeByNHSEB( x, act.hom ) );
+            tmp := List( tmp, x -> PreimagesRepresentativeByNHSEB( x, act.hom )*rad[i] );
             tmp := Concatenation( tmp, rad[i+1] );
             Add( ser, tmp );
         od;
@@ -193,10 +193,9 @@ InstallGlobalFunction( IrreducibleSeriesAbelianMatGroup,
         Add( ser, rad[i] );
         act  := InducedActionFactor( mats, U, rad[i], rad[i+1] );
         split := IrreducibleSplitting( act.act );
-        
         for j in [2..Length(split)] do
             tmp := SumOfSplitting( split, j );
-            tmp := List( tmp, x -> PreimagesRepresentativeByNHSEB( x, act.hom ) );
+            tmp := List( tmp, x -> PreimagesRepresentativeByNHSEB( x, act.hom )*rad[i] );
             tmp := Concatenation( tmp, rad[i+1] );
             Add( ser, tmp );
         od;

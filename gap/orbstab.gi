@@ -147,6 +147,7 @@ InstallGlobalFunction( StabilizerAbelianMatGroup,
     function( mats, v )
 
     local   ser,
+            exp,
             stab,
             imat,
             I,
@@ -209,7 +210,7 @@ InstallGlobalFunction( StabilizerAbelianMatGroup,
         fi;
     fi;
 
-    return stab;
+    return rec( stab := stab, exp := exp );
 end );
 
 #################################################################
@@ -267,11 +268,12 @@ ExponentsBasisMatrixAlgebra := function( mats )
 
 end;
 
-MembershipDelta := function( mats, imat, u, delta )
+MembershipDelta := function( mats, imat, u, delta, U, V )
 
     local   I,
             B,
             exp,
+            vec,
             g;
 
     I   := IdentityMat( Length( imat[1] ) );
@@ -281,8 +283,10 @@ MembershipDelta := function( mats, imat, u, delta )
     exp := List( B.exp, x -> MappedVector( x, mats ) );
     # Compute a basis of Q^d with vectors delta(g_i)
     exp := List( exp, delta );
+    exp := InducedDerivationQuotient( exp, U, V );
+    vec   := InducedDerivationQuotient( [u], U, V )[1];
     # Express u in the last basis
-    exp := SolutionMat( exp, u );
+    exp := SolutionMat( exp, vec );
     # Find the corresponding element in G
     g   := exp*B.base + I;
     # Test membership in G
@@ -405,7 +409,7 @@ InstallGlobalFunction( OrbitAbelianMatGroup,
             derC := InducedDerivationQuotient( derC, ser[i], ser[i+1] );
             
             if ForAll( derC, x -> x = x*0 ) then
-                mem  := MembershipDelta( stab, imat, w-u, delta );
+                mem  := MembershipDelta( stab, imat, w-u, delta, ser[i], ser[i+1] );
                 if mem.membership = false then return false; fi;
 
                 y    := y*mem.y;
